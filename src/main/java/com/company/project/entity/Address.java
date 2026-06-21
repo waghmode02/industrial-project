@@ -1,3 +1,4 @@
+
 package com.company.project.entity;
 import jakarta.persistence.*;
 
