@@ -10,7 +10,7 @@ import com.company.project.dto.user.UserKycRequest;
 import com.company.project.service.impl.UserKycServiceImpl;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 public class UserKycController {
 	@Autowired
 	private UserKycServiceImpl userKycServiceImpl;
