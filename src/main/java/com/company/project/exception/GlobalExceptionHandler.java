@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.company.project.dto.ApiErrorResponse;
+import com.company.project.dto.user.UserFailureResponse;
 import com.company.project.exception.kyc.KycException;
+import com.company.project.exception.kyc.UserProfileAlreadyExistException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -29,4 +31,14 @@ public class GlobalExceptionHandler {
 
 	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 	 }
+	 
+	 @ExceptionHandler(UserProfileAlreadyExistException.class)
+		public ResponseEntity<UserFailureResponse> handleProfileAlreadyExist(Exception ex,HttpServletRequest request){
+			UserFailureResponse response=new UserFailureResponse();
+			response.setStatus("ERROR");
+	        response.setMessage(ex.getMessage());
+	        response.setErrorCode("USER_001");
+			return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+		}
+	 
 }
