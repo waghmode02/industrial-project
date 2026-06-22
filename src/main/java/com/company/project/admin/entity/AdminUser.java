@@ -2,9 +2,9 @@ package com.company.project.admin.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "AdminUser")
 
-public class User
+public class AdminUser
 {
 
     @Id

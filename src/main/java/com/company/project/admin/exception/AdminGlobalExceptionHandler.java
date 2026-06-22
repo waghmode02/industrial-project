@@ -5,52 +5,42 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.company.project.admin.exception.UserNotFoundException;
-import com.company.project.dto.ApiErrorResponse;
-import com.company.project.exception.kyc.KycException;
-
-import jakarta.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class AdminGlobalExceptionHandler {
 
-    @ExceptionHandler(KycException.class)
-    public ResponseEntity<ApiErrorResponse> handleKycException(
-            KycException ex,
-            HttpServletRequest request) {
-
-        ApiErrorResponse response = new ApiErrorResponse();
-        response.setStatus("ERROR");
-        response.setMessage(ex.getMessage());
-        response.setPath(request.getRequestURI());
-
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
+    // USER NOT FOUND
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleUserNotFoundException(
-            UserNotFoundException ex,
-            HttpServletRequest request) {
+    public ResponseEntity<?> handleUserNotFound(UserNotFoundException ex) {
 
-        ApiErrorResponse response = new ApiErrorResponse();
-        response.setStatus("Failed");
-        response.setMessage(ex.getMessage());
-        response.setPath(request.getRequestURI());
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "FAILED");
+        response.put("message", ex.getMessage());
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    // INVALID REQUEST (no name/email/phone)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleBadRequest(IllegalArgumentException ex) {
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "FAILED");
+        response.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    // EXTRA: Any unexpected error
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiErrorResponse> handleGeneric(
-            Exception ex,
-            HttpServletRequest request) {
+    public ResponseEntity<?> handleGenericException(Exception ex) {
 
-        ApiErrorResponse response = new ApiErrorResponse();
-        response.setStatus("Failed");
-        response.setMessage(ex.getMessage());
-        response.setPath(request.getRequestURI());
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "ERROR");
+        response.put("message", "Something went wrong");
 
-        return new ResponseEntity<>(response,
-                HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

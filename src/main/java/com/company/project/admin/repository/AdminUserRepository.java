@@ -1,19 +1,17 @@
-
 package com.company.project.admin.repository;
 
-import java.util.List;
-
+import com.company.project.admin.entity.AdminUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.company.project.admin.entity.User;
+import java.util.List;
 
 @Repository
-public interface AdminUserRepository extends JpaRepository<User, Long> {
+public interface AdminUserRepository extends JpaRepository<AdminUser, Long> {
 
-    List<User> findByNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneContaining(
-            String name,
-            String email,
-            String phone);
+    List<AdminUser> findByNameContainingIgnoreCase(String name);
 
+    List<AdminUser> findByEmailContainingIgnoreCase(String email);
+
+    List<AdminUser> findByPhoneContaining(String phone);
 }

@@ -1,11 +1,9 @@
 package com.company.project.admin.service;
 
+import com.company.project.admin.entity.AdminUser;
+
 import java.util.List;
 
-import com.company.project.admin.dto.AdminUserResponseDTO;
-
 public interface AdminUserService {
-
-    List<AdminUserResponseDTO> searchUsers(String keyword);
-
+    List<AdminUser> searchUsers(String name, String email, String phone);
 }
