@@ -5,20 +5,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.company.project.dto.user.UserFailureResponse;
-import com.company.project.dto.user.UserRequest;
-import com.company.project.dto.user.UserSuccessResponse;
-import com.company.project.entity.user.Users;
-import com.company.project.exception.kyc.UserNotFoundException;
-import com.company.project.exception.kyc.UserProfileAlreadyExistException;
-import com.company.project.repository.user.UsersRepository;
+import com.company.project.dto.UserRequest;
+import com.company.project.dto.UserSuccessResponse;
+import com.company.project.entity.Users;
+import com.company.project.exception.UserNotFoundException;
+import com.company.project.exception.UserProfileAlreadyExistException;
+import com.company.project.repository.UsersRepository;
 import com.company.project.service.UsersService;
 
 @Service
 public class UsersServiceImpl implements UsersService{
 	
 	@Autowired
-	UsersRepository usersRepository;
+    UsersRepository usersRepository;
 
 	@Override
 	public Users getUsersById(Integer id) {

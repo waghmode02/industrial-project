@@ -3,21 +3,26 @@ package com.company.project.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.company.project.dto.user.UserKycRequest;
-import com.company.project.dto.user.UserKycResponse;
-import com.company.project.entity.user.UserKyc;
-import com.company.project.exception.kyc.AadhaarAlreadyExistsException;
-import com.company.project.exception.kyc.PanAlreadyExistsException;
-import com.company.project.repository.user.UserKycRepository;
+import com.company.project.dto.UserKycRequest;
+import com.company.project.dto.UserKycResponse;
+import com.company.project.entity.UserKyc;
+import com.company.project.exception.AadhaarAlreadyExistsException;
+import com.company.project.exception.PanAlreadyExistsException;
+import com.company.project.exception.UserNotFoundException;
+import com.company.project.repository.UserKycRepository;
+import com.company.project.repository.UsersRepository;
+import com.company.project.service.UserKycService;
 
 @Service
-public class UserKycServiceImpl {
+public class UserKycServiceImpl implements UserKycService{
 
     @Autowired
     private UserKycRepository userKycRepository;
-
+    @Autowired
+    private UsersRepository usersRepository;
+    @Override
     public UserKycResponse uploadUserKyc(UserKycRequest request) {
-
+    	usersRepository.findById(request.getUserId()).orElseThrow(()->new  UserNotFoundException("User not found"));
         UserKycResponse response = new UserKycResponse();
         if (userKycRepository.existsById(request.getUserId())) {
             response.setStatus("ERROR");
@@ -26,11 +31,11 @@ public class UserKycServiceImpl {
             return response;
         }
         if (userKycRepository.existsByPanNumber(request.getPanNumber())) {
-            throw new PanAlreadyExistsException();
+            throw new PanAlreadyExistsException("Pan already exists");
         }
 
         if (userKycRepository.existsByAadhaarNumber(request.getAadhaarNumber())) {
-            throw new AadhaarAlreadyExistsException();
+            throw new AadhaarAlreadyExistsException("Aadhaar already exists");
         }
 
         UserKyc user = new UserKyc();

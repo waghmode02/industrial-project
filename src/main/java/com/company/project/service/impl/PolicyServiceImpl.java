@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.company.project.dto.ApiResponseDto;
-import com.company.project.dto.user.PolicyRequestDto;
+import com.company.project.dto.PolicyRequestDto;
 import com.company.project.entity.Policy;
 import com.company.project.entity.PolicyType;
-import com.company.project.exception.kyc.ResourceNotFoundException;
+import com.company.project.exception.ResourceNotFoundException;
 import com.company.project.repository.PolicyRepository;
 import com.company.project.repository.PolicyTypeRepository;
 import com.company.project.service.PolicyService;
