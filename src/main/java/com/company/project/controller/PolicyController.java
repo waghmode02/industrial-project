@@ -9,17 +9,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.company.project.dto.ApiResponseDto;
 import com.company.project.dto.PolicyRequestDto;
+import com.company.project.dto.PolicyTypeRequestDto;
 import com.company.project.service.PolicyService;
 
 @RestController
 @RequestMapping("/api/v1/policies")
 public class PolicyController {
-	@Autowired
-	private PolicyService policyService;
-	@PostMapping
-	public ResponseEntity<ApiResponseDto> createPolicy(@RequestBody PolicyRequestDto request){
-		ApiResponseDto response=policyService.createPolicy(request);
-		return ResponseEntity.ok(response);
-	}
-}
 
+    @Autowired
+    private PolicyService policyService;
+
+    @PostMapping
+    public ResponseEntity<ApiResponseDto> createPolicy(@RequestBody PolicyRequestDto request) {
+
+        ApiResponseDto response = policyService.createPolicy(request);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/types")
+    public ResponseEntity<ApiResponseDto> createPolicyType(
+            @RequestBody PolicyTypeRequestDto request) {
+
+        ApiResponseDto response = policyService.createPolicyType(request);
+
+        return ResponseEntity.ok(response);
+    }
+}

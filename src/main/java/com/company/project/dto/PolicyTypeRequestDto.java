@@ -1,33 +1,10 @@
-package com.company.project.entity;
+package com.company.project.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class PolicyType {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class PolicyTypeRequestDto {
 
     private String policyTypeName;
-
     private String description;
-
     private Double basePremium;
-
-    public PolicyType() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getPolicyTypeName() {
         return policyTypeName;
